@@ -12,11 +12,14 @@ import reactor.core.publisher.Mono;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousFileChannel;
 import java.nio.channels.CompletionHandler;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class FileController {
@@ -29,7 +32,9 @@ public class FileController {
 
         Resource resource = new ClassPathResource("parallel.jpg");
         File file = resource.getFile();
-        return zeroCopyResponse.writeWith(file, 0, file.length());
+        //File 을 가져가서 경로의 파일을 ZeroCopy 방식으로 전송한다.
+        //ZeroCopy 는 Servlet을 거치지 않고 바로 네트워크를 통해 파일을 전송하는것
+        return zeroCopyResponse.writeWith(file.toPath(), 0, file.length());
     }
 
 
@@ -129,6 +134,26 @@ public class FileController {
                 throw new RuntimeException(e);    //// 상황에 맞는 예외 처리 필요
             }
         }
+    }
+
+    Map<String, Member> itgTeam = new HashMap();
+    Map<String, Member> seoulWomenTeam = new HashMap();
+
+    public void itgTeamAdd(){
+        String developer = "윤지영";
+        Member yjy = relieve(developer);
+        itgTeam.put(developer, yjy);
+        welcome(developer);
+    }
+
+    public Member relieve(String developer){
+        Member relievedOne = seoulWomenTeam.get(developer);
+        seoulWomenTeam.remove(developer);
+        return relievedOne;
+    }
+
+    public void welcome(String developer){
+        System.out.println(itgTeam.get(developer).toString()+"씨의 복귀를 환여합니다!!!");
     }
 
 }
