@@ -136,24 +136,4 @@ public class FileController {
         }
     }
 
-    Map<String, Member> itgTeam = new HashMap();
-    Map<String, Member> seoulWomenTeam = new HashMap();
-
-    public void itgTeamAdd(){
-        String developer = "윤지영";
-        Member yjy = relieve(developer);
-        itgTeam.put(developer, yjy);
-        welcome(developer);
-    }
-
-    public Member relieve(String developer){
-        Member relievedOne = seoulWomenTeam.get(developer);
-        seoulWomenTeam.remove(developer);
-        return relievedOne;
-    }
-
-    public void welcome(String developer){
-        System.out.println(itgTeam.get(developer).toString()+"씨의 복귀를 환여합니다!!!");
-    }
-
 }
